@@ -1,0 +1,45 @@
+# Build artifacts
+build/
+*.o
+*.d
+*.asm
+*.sym
+*.img
+*.bin
+*.out
+
+# macOS metadata
+.DS_Store
+._*
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# GDB files
+.gdbinit
+
+# Temporary files
+*.tmp
+*.temp
+
+# Log files
+*.log
+build_log.txt
+
+# Compiled binaries
+kernel
+bootblock
+entryother
+initcode
+fs.img
+xv6.img
+
+# User programs (compiled)
+_*
+
+# Tools (compiled)
+mkfs
