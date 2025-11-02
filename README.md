@@ -11,11 +11,7 @@
 
 Watch xv6-plus in action:
 
-<video width="800" controls autoplay muted loop>
-  <source src="demo-video.mov" type="video/quicktime">
-  <source src="demo-video.mov" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![xv6-plus Demo](demo-video.gif)
 
 *Demonstration of xv6-plus booting and running with enhanced features*
 
