@@ -43,37 +43,69 @@ xv6-plus/
 
 ### Installation
 
+**Important**: This repository contains the xv6-plus framework and documentation, but requires the original xv6 kernel source to build.
+
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/xv6-plus.git
+# Clone the repositories
+git clone https://github.com/stix26/xv6-plus.git
+git clone https://github.com/mit-pdos/xv6-public.git xv6-original-x86
 cd xv6-plus
+
+# Set up the kernel source (required for first build)
+mkdir -p src/kernel/include src/kernel/core
+cp ../xv6-original-x86/*.h src/kernel/include/
+cp ../xv6-original-x86/*.c src/kernel/core/
+cp ../xv6-original-x86/*.S src/kernel/core/
+cp ../xv6-original-x86/*.pl src/kernel/core/
+cp ../xv6-original-x86/kernel.ld .
+cp ../xv6-original-x86/Makefile Makefile.original
+cp Makefile.original Makefile
+
+# Copy files to root for build compatibility
+cp src/boot/* .
+cp src/kernel/core/* .
+cp src/kernel/include/* .
+cp src/user/bin/* .
+cp ../xv6-original-x86/README .
+
+# Fix compiler warnings for modern GCC
+sed -i '' 's/-Werror/-Werror -Wno-error=array-bounds -Wno-error=infinite-recursion/' Makefile
+
+# Make scripts executable
+chmod +x tools/sign.pl tools/pr.pl src/kernel/core/*.pl
 
 # Build the system
 make TOOLPREFIX=i686-elf-
 
 # Run in QEMU
-make qemu-nox
+make qemu-nox TOOLPREFIX=i686-elf-
 ```
 
 ### Alternative Build Methods
 
 ```bash
-# Build with specific toolchain
+# Build with specific toolchain (if you have i386-jos-elf-gcc)
 make TOOLPREFIX=i386-jos-elf-
 
-# Run with graphics
-make qemu
+# Run with graphics (if available)
+make qemu TOOLPREFIX=i686-elf-
 
 # Run with GDB debugging
-make qemu-gdb
+make qemu-gdb TOOLPREFIX=i686-elf-
+
+# Clean build
+make clean
+make TOOLPREFIX=i686-elf-
 ```
 
 ### Performance
 
-- **Build time**: ~5 seconds (clean build on modern hardware)
-- **Kernel size**: 487KB (with all advanced features)
+- **Build time**: ~30 seconds (clean build on modern hardware)
+- **Kernel size**: 205KB (basic xv6 kernel with xv6-plus framework)
 - **Disk image**: 5MB (complete bootable system)
 - **Memory usage**: 512MB recommended for QEMU
+
+**Note**: The advanced features listed below are documented and planned but not yet implemented. This is currently the base xv6 system with the xv6-plus development framework.
 
 ## ✨ Advanced Features
 
@@ -141,19 +173,34 @@ Comprehensive documentation is available in the [`docs/`](docs/) directory:
 
 ## 🧪 Testing
 
-Run the comprehensive test suite:
+Run the basic xv6 test suite:
 
 ```bash
 # Boot and run user tests
-make qemu-nox
+make qemu-nox TOOLPREFIX=i686-elf-
 # In xv6 shell:
 $ usertests
+$ ls
+$ cat README
 
-# Run specific feature tests
-$ crash_test
-$ mmap_test
-$ rt_test
+# Exit QEMU: Ctrl+A, then X
 ```
+
+**Note**: Advanced feature tests (crash_test, mmap_test, rt_test) are not yet implemented.
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **"No such file or directory" errors**: Make sure you've copied the original xv6 source files as shown in the installation steps.
+
+2. **"Permission denied" for .pl scripts**: Run `chmod +x tools/*.pl src/kernel/core/*.pl`
+
+3. **Compiler errors about array bounds**: The Makefile should include `-Wno-error=array-bounds -Wno-error=infinite-recursion` flags.
+
+4. **QEMU not found**: Install with `brew install qemu` on macOS.
+
+5. **Cross-compiler not found**: Install with `brew install i686-elf-gcc` on macOS.
 
 ## 🤝 Contributing
 
