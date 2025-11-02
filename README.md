@@ -246,4 +246,6 @@ Based on the original **xv6** operating system developed at MIT. Special thanks 
 
 ---
 
+© 2025 stix26. All rights reserved.
+
 **Built with ❤️ by stix26 - Pushing the boundaries of operating system innovation**
