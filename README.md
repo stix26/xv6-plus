@@ -7,6 +7,14 @@
 
 **xv6-plus** is a highly advanced, feature-rich operating system based on the educational xv6 kernel. It extends the original xv6 with modern operating system features including advanced memory management, real-time scheduling, crash analysis, live patching, and cutting-edge experimental features.
 
+## 🎥 Demo Video
+
+Watch xv6-plus in action:
+
+https://github.com/stix26/xv6-plus/assets/demo-video.mov
+
+*Demonstration of xv6-plus booting and running with enhanced features*
+
 ## 📁 Project Structure
 
 ```
