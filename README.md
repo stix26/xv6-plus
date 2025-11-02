@@ -68,14 +68,19 @@ cp src/kernel/include/* .
 cp src/user/bin/* .
 cp ../xv6-original-x86/README .
 
-# Fix compiler warnings for modern GCC
-sed -i '' 's/-Werror/-Werror -Wno-error=array-bounds -Wno-error=infinite-recursion/' Makefile
+# Fix compiler warnings for modern GCC (macOS)
+sed -i '' 's/-Werror/-Werror -Wno-error=array-bounds -Wno-error=infinite-recursion/' Makefile 2>/dev/null || \
+# Fix compiler warnings for modern GCC (Linux)
+sed -i 's/-Werror/-Werror -Wno-error=array-bounds -Wno-error=infinite-recursion/' Makefile
 
 # Make scripts executable
 chmod +x tools/sign.pl tools/pr.pl src/kernel/core/*.pl
 
 # Build the system
 make TOOLPREFIX=i686-elf-
+
+# Build filesystem image (if not created automatically)
+make fs.img TOOLPREFIX=i686-elf-
 
 # Run in QEMU
 make qemu-nox TOOLPREFIX=i686-elf-
