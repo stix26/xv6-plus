@@ -11,7 +11,7 @@
 
 Watch xv6-plus in action:
 
-![xv6-plus Demo](demo-video.gif)
+![xv6-plus Demo](assets/demo-video.gif)
 
 *Demonstration of xv6-plus booting and running with enhanced features*
 
